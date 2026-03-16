@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Destination</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="destBody">
+
+<div class="destCard">
+
+<h1 id="title"></h1>
+
+<a href="payment.html" class="payBtn">Pay Now</a>
+
+</div>
+
+<script>
+
+let place=localStorage.getItem("destination")
+
+document.getElementById("title").innerHTML="Trip to "+place
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Booking</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="bookingBody">
+
+<div class="bookingBox">
+
+<h1>Booking Details</h1>
+
+<input id="name" placeholder="Name">
+<input id="phone" placeholder="Phone Number">
+<input id="email" placeholder="Email">
+<input id="place" placeholder="Where to visit">
+
+<button class="nextBtn" onclick="goNext()">Next</button>
+
+</div>
+
+<script>
+
+function goNext(){
+
+let name=document.getElementById("name").value
+let place=document.getElementById("place").value
+
+let bookings=JSON.parse(localStorage.getItem("bookings")) || []
+
+bookings.push({name:name,place:place})
+
+localStorage.setItem("bookings",JSON.stringify(bookings))
+localStorage.setItem("destination",place)
+
+window.location.href="destination.html"
+
+}
+
+</script>
+</div>
+
+<script>
+
+function goNext(){
+
+let name=document.getElementById("name").value
+let phone=document.getElementById("phone").value
+let email=document.getElementById("email").value
+let place=document.getElementById("place").value
+
+let bookings=JSON.parse(localStorage.getItem("bookings")) || []
+
+bookings.push({
+name:name,
+phone:phone,
+email:email,
+place:place
+})
+
+localStorage.setItem("bookings",JSON.stringify(bookings))
+localStorage.setItem("destination",place)
+
+window.location.href="destination.html"
+
+}
+
+</script>
+
+</body>
+</html>
+</body>
+</html>

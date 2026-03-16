@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body class="adminBody">
+
+<div class="adminCard">
+
+<h1>Admin Dashboard</h1>
+
+<div id="data"></div>
+
+<button class="logoutBtn" onclick="logout()">Logout</button>
+
+</div>
+
+<script>
+
+if(localStorage.getItem("adminLogin")!="true"){
+window.location.href="admin-login.html"
+}
+
+let bookings=JSON.parse(localStorage.getItem("bookings")) || []
+
+let text=""
+
+bookings.forEach(b=>{
+text+="<p>"+b.name+" → "+b.place+"</p>"
+})
+
+document.getElementById("data").innerHTML=text
+
+function logout(){
+localStorage.removeItem("adminLogin")
+window.location.href="admin-login.html"
+}
+
+</script>
+
+</body>
+</html>

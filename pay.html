@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Payment Successful</h2>
+
+<button onclick="save()">Finish</button>
+
+<script>
+function save(){
+
+let data=localStorage.getItem("booking")
+localStorage.setItem("adminData",data)
+
+alert("Booking Saved")
+
+}
+</script>
+
+</body>
+</html>
