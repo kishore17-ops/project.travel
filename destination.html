@@ -11,15 +11,25 @@
 
 <h1 id="title"></h1>
 
-<a href="payment.html" class="payBtn">Pay Now</a>
+<div class="packageOptions">
+  <button class="payBtn" id="basicBtn" onclick="selectPackage('Basic', 15000)">Basic ₹15,000</button>
+  <button class="payBtn" id="premiumBtn" onclick="selectPackage('Premium', 30000)">Premium ₹30,000</button>
+  <button class="payBtn" id="luxuryBtn" onclick="selectPackage('Luxury', 60000)">Luxury ₹60,000</button>
+</div>
 
 </div>
 
 <script>
 
-let place=localStorage.getItem("destination")
+let place = localStorage.getItem("destination") || "your destination";
 
-document.getElementById("title").innerHTML="Trip to "+place
+function selectPackage(type, amount) {
+  localStorage.setItem('packageType', type);
+  localStorage.setItem('packageAmount', amount);
+  window.location.href = 'payment.html';
+}
+
+document.getElementById("title").innerHTML = "Trip to " + place;
 
 </script>
 
