@@ -522,52 +522,84 @@ to{text-shadow:0 0 25px red;}
 /* ADMIN PAGE */
 
 .adminBody{
-height:100vh;
-background:linear-gradient(120deg,#ff512f,#dd2476);
-display:flex;
-justify-content:center;
-align-items:center;
-font-family:Arial;
+  height:100vh;
+  background: linear-gradient(120deg, #ff512f, #dd2476);
+  background-size: 400% 400%;
+  animation: adminBg 12s ease infinite;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family: Arial, sans-serif;
 }
 
 .adminCard{
-background:rgba(255,255,255,0.2);
-backdrop-filter:blur(15px);
-padding:60px;
-border-radius:25px;
-text-align:center;
-color:white;
-width:500px;
-animation:slideAdmin 1s ease;
-box-shadow:0 30px 80px rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(18px);
+  padding: 60px 45px;
+  border-radius: 28px;
+  text-align: center;
+  color: white;
+  width: 440px;
+  max-width: 90%;
+  animation: slideAdmin 0.8s ease;
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
 .adminCard h1{
-margin-bottom:20px;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
 }
 
-.logoutBtn{
-padding:15px 40px;
-background:black;
-color:white;
-border:none;
-border-radius:30px;
-margin-top:30px;
-cursor:pointer;
-transition:0.3s;
+.adminCard input {
+  width: 100%;
+  padding: 14px 16px;
+  margin: 10px 0;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
 }
 
-.logoutBtn:hover{
-transform:scale(1.1);
+.adminCard input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.adminCard input:focus {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.adminCard .nextBtn {
+  margin-top: 18px;
+  width: 100%;
+  padding: 14px 0;
+  border-radius: 22px;
+  font-size: 17px;
+}
+
+.adminCard .nextBtn:hover {
+  transform: scale(1.03);
+  box-shadow: 0 14px 28px rgba(255, 152, 0, 0.4);
+}
+
+@keyframes adminBg {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes slideAdmin{
-from{
-transform:translateY(100px);
-opacity:0;
-}
-to{
-transform:translateY(0);
-opacity:1;
-}
+  from{
+    transform: translateY(80px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
