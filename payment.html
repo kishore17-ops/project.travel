@@ -11,7 +11,8 @@
 
 <h1>Secure Payment 💳</h1>
 
-<p>Amount : ₹30,000</p>
+<p id="amountText">Amount : ₹0</p>
+<p id="packageText"></p>
 
 <button class="confirmBtn" onclick="done()">Confirm Payment</button>
 
@@ -19,15 +20,22 @@
 
 <script>
 
-function done(){   
-     
-alert("Booking Successful ✅")
-
-setTimeout(function(){
-window.location.href="index.html"
-},500)
-
+function done(){
+  alert("Booking Successful ✅");
+  setTimeout(function(){
+    window.location.href="index.html";
+  },500);
 }
+
+function updateAmount() {
+  const amount = localStorage.getItem('packageAmount') || 0;
+  const pkg = localStorage.getItem('packageType') || 'Unknown';
+
+  document.getElementById('amountText').textContent = `Amount : ₹${amount}`;
+  document.getElementById('packageText').textContent = `Package : ${pkg}`;
+}
+
+updateAmount();
 
 </script>
 
