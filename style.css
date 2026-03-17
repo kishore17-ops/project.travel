@@ -40,6 +40,30 @@ background:rgba(255,255,255,0.1);
 backdrop-filter:blur(10px);
 }
 
+#navMenu {
+display: flex;
+gap: 20px;
+align-items: center;
+}
+
+#navMenu a {
+padding: 10px 20px;
+background: rgba(255,255,255,0.2);
+color: white;
+text-decoration: none;
+border-radius: 25px;
+transition: all 0.3s ease;
+border: 1px solid rgba(255,255,255,0.3);
+font-weight: bold;
+}
+
+#navMenu a:hover {
+background: rgba(255,255,255,0.4);
+transform: scale(1.05);
+box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+color: #ff9800;
+}
+
 .menuBtn{
 display:none;
 font-size:28px;
