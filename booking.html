@@ -3,6 +3,156 @@
 <head>
 <title>Booking</title>
 <link rel="stylesheet" href="style.css">
+<style>
+/* Keep the booking box centered and add step animations */
+.input-group {
+  display: none;
+  animation: slideIn 0.4s ease;
+  text-align: center;
+}
+
+.input-group.active {
+  display: block;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  text-align: center;
+}
+
+.input-group input {
+  width: 100% !important;
+  padding: 15px !important;
+  margin-bottom: 15px !important;
+  border: none !important;
+  border-radius: 10px !important;
+  font-size: 16px !important;
+  text-align: center !important;
+  transition: 0.3s !important;
+}
+
+.input-group input:focus {
+  outline: none;
+  box-shadow: 0 0 10px rgba(255, 152, 0, 0.5);
+  transform: scale(1.02);
+}
+
+.progress {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.step-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transition: all 0.3s ease;
+}
+
+.step-dot.completed {
+  background: #4caf50;
+  transform: scale(1.2);
+}
+
+.step-dot.active {
+  background: #ff9800;
+  width: 16px;
+  height: 16px;
+  animation: pulse 1s infinite;
+}
+
+.button-group {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+  justify-content: center;
+  align-items: center;
+}
+
+.prevBtn {
+  width: 48%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 25px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+  border: none;
+}
+
+.prevBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.nextBtn {
+  width: 100%;
+  padding: 12px !important;
+  background: linear-gradient(45deg, #ff9800, #ff3d00) !important;
+  border: none !important;
+  border-radius: 25px !important;
+  color: white !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: 0.4s !important;
+  margin-top: 0 !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.nextBtn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 5px 15px rgba(255, 152, 0, 0.5);
+}
+
+.nextBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nextBtn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.nextBtn:hover::before {
+  left: 100%;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+</style>
 </head>
 
 <body class="bookingBody">
@@ -11,64 +161,126 @@
 
 <h1>Booking Details</h1>
 
-<input id="name" placeholder="Name">
-<input id="phone" placeholder="Phone Number">
-<input id="email" placeholder="Email">
-<input id="place" placeholder="Where to visit">
+<div class="progress">
+  <div class="step-dot active" id="dot0"></div>
+  <div class="step-dot" id="dot1"></div>
+  <div class="step-dot" id="dot2"></div>
+  <div class="step-dot" id="dot3"></div>
+</div>
 
-<button class="nextBtn" onclick="goNext()">Next</button>
+<div class="input-group active" id="step0">
+  <label>Enter Your Name</label>
+  <input id="name" type="text" placeholder="Full Name" onkeyup="checkAndActivateNext(0)">
+</div>
+
+<div class="input-group" id="step1">
+  <label>Enter Your Phone Number</label>
+  <input id="phone" type="text" placeholder="Phone Number" onkeyup="checkAndActivateNext(1)">
+</div>
+
+<div class="input-group" id="step2">
+  <label>Enter Your Email</label>
+  <input id="email" type="email" placeholder="Email Address" onkeyup="checkAndActivateNext(2)">
+</div>
+
+<div class="input-group" id="step3">
+  <label>Where Do You Want to Visit?</label>
+  <input id="place" type="text" placeholder="Destination" onkeyup="checkAndActivateNext(3)">
+</div>
+
+<div class="button-group">
+  <button class="prevBtn" id="prevBtn" onclick="previousStep()" style="display: none;">Previous</button>
+  <button class="nextBtn" id="nextBtn" onclick="nextStep()" disabled>Next</button>
+</div>
 
 </div>
 
 <script>
+let currentStep = 0;
+const totalSteps = 4;
+const fields = ['name', 'phone', 'email', 'place'];
 
-function goNext(){
+function checkAndActivateNext(step) {
+  const input = document.getElementById(fields[step]);
+  const nextBtn = document.getElementById('nextBtn');
 
-let name=document.getElementById("name").value
-let place=document.getElementById("place").value
-
-let bookings=JSON.parse(localStorage.getItem("bookings")) || []
-
-bookings.push({name:name,place:place})
-
-localStorage.setItem("bookings",JSON.stringify(bookings))
-localStorage.setItem("destination",place)
-
-window.location.href="destination.html"
-
+  nextBtn.disabled = input.value.trim().length === 0;
 }
 
-</script>
-</div>
+function updateProgress() {
+  for (let i = 0; i < totalSteps; i++) {
+    const dot = document.getElementById(`dot${i}`);
+    const step = document.getElementById(`step${i}`);
 
-<script>
+    dot.classList.toggle('completed', i < currentStep);
+    dot.classList.toggle('active', i === currentStep);
 
-function goNext(){
+    step.classList.toggle('active', i === currentStep);
+  }
 
-let name=document.getElementById("name").value
-let phone=document.getElementById("phone").value
-let email=document.getElementById("email").value
-let place=document.getElementById("place").value
-
-let bookings=JSON.parse(localStorage.getItem("bookings")) || []
-
-bookings.push({
-name:name,
-phone:phone,
-email:email,
-place:place
-})
-
-localStorage.setItem("bookings",JSON.stringify(bookings))
-localStorage.setItem("destination",place)
-
-window.location.href="destination.html"
-
+  const prevBtn = document.getElementById('prevBtn');
+  prevBtn.style.display = currentStep === 0 ? 'none' : 'block';
 }
 
+function nextStep() {
+  const currentInput = document.getElementById(fields[currentStep]);
+
+  if (currentInput.value.trim().length === 0) {
+    alert('Please fill in this field');
+    return;
+  }
+
+  if (currentStep < totalSteps - 1) {
+    currentStep++;
+    updateProgress();
+
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.disabled = true;
+    nextBtn.textContent = currentStep === totalSteps - 1 ? 'Complete' : 'Next';
+
+    setTimeout(() => {
+      document.getElementById(fields[currentStep]).focus();
+    }, 100);
+  } else {
+    submitBooking();
+  }
+}
+
+function previousStep() {
+  if (currentStep > 0) {
+    currentStep--;
+    updateProgress();
+
+    const nextBtn = document.getElementById('nextBtn');
+    nextBtn.disabled = false;
+    nextBtn.textContent = 'Next';
+
+    setTimeout(() => {
+      document.getElementById(fields[currentStep]).focus();
+    }, 100);
+  }
+}
+
+function submitBooking() {
+  const name = document.getElementById('name').value;
+  const phone = document.getElementById('phone').value;
+  const email = document.getElementById('email').value;
+  const place = document.getElementById('place').value;
+
+  const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
+
+  bookings.push({ name, phone, email, place });
+
+  localStorage.setItem('bookings', JSON.stringify(bookings));
+  localStorage.setItem('destination', place);
+
+  window.location.href = 'destination.html';
+}
+
+window.onload = () => {
+  updateProgress();
+};
 </script>
 
-</body>
-</html>
 </body>
 </html>
