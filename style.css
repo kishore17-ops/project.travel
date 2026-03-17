@@ -269,13 +269,36 @@ background:black;
 }
 
 @media(max-width:768px){
-.cards{flex-direction:column;align-items:center;}
-.menuBtn{display:block;}
-nav{display:none;flex-direction:column;background:black;position:absolute;top:60px;right:0;padding:20px;}
-nav.active{display:flex;}
-.transport { flex-direction: column; align-items: center; }
-.transport .box { width: 80%; max-width: 300px; }
+  .cards{flex-direction:column;align-items:center;}
+  .menuBtn{display:block;}
+
+  nav{
+    display:none !important;
+    flex-direction:column;
+    background: rgba(0,0,0,0.85);
+    position:absolute;
+    top:60px;
+    right:0;
+    width: 220px;
+    padding:20px;
+    border-radius: 0 0 0 12px;
+    box-shadow: -4px 8px 18px rgba(0,0,0,0.35);
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 0;
+    transform: translateX(20px);
+    z-index: 99;
+  }
+
+  nav.active{
+    display:flex !important;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .transport { flex-direction: column; align-items: center; }
+  .transport .box { width: 80%; max-width: 300px; }
 }
+
 body::before{
 content:"";
 position:fixed;
