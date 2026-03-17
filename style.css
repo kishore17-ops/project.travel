@@ -80,23 +80,103 @@ display:none;
 box-shadow:0 10px 30px rgba(0,0,0,0.4);
 }
 
-.cards{
-display:flex;
-justify-content:center;
-gap:30px;
-padding:40px;
+.cards {
+  display:flex;
+  justify-content:center;
+  gap:30px;
+  padding:40px;
+  flex-wrap: wrap;
 }
 
-.card{
-background:white;
-color:black;
-padding:40px;
-border-radius:20px;
-transition:0.4s;
+.card {
+  background: linear-gradient(135deg, #ff9800, #ff3d00);
+  color: white;
+  padding: 40px;
+  border-radius: 25px;
+  transition: 0.5s;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover{
-transform:scale(1.1);
+.card:hover {
+  transform: scale(1.1) rotate(-2deg);
+  box-shadow: 0 25px 50px rgba(255,60,0,0.7);
+}
+
+.card h3 {
+  font-family: 'Orbitron', sans-serif; /* stylish futuristic font */
+  font-size: 32px;
+  background: linear-gradient(90deg, #ffffff, #ffeb3b, #ff3d00); /* bright gradient */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  animation: glowText 2s infinite alternate;
+  position: relative;
+}
+
+@keyframes glowText {
+  0% {
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffeb3b, 0 0 15px #ff3d00;
+  }
+  50% {
+    text-shadow: 0 0 15px #ffffff, 0 0 25px #ffeb3b, 0 0 35px #ff3d00;
+  }
+  100% {
+    text-shadow: 0 0 5px #ffffff, 0 0 10px #ffeb3b, 0 0 15px #ff3d00;
+  }
+}
+
+/* Optional moving underline */
+.card h3::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #ffeb3b; /* bright yellow underline */
+  margin: 8px auto 0;
+  border-radius: 2px;
+  animation: slideUnderline 2s infinite alternate;
+}
+
+@keyframes slideUnderline {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+@keyframes textGradient {
+  0% { background-position: 0% }
+  50% { background-position: 100% }
+  100% { background-position: 0% }
+}
+
+.card::before {
+  content: "";
+  position: absolute;
+  width: 150%;
+  height: 150%;
+  top: -50%;
+  left: -50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+  transform: rotate(45deg);
+  pointer-events: none;
+}
+
+.role {
+  display: inline-block;
+  padding: 5px 12px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.2);
+  color: white;
+  font-size: 14px;
+  margin-top: 10px;
+  transition: 0.3s;
+}
+
+.card:hover .role {
+  background: rgba(255,255,255,0.5);
 }
 
 .formBox{
