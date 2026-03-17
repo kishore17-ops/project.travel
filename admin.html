@@ -20,22 +20,63 @@
 <script>
 
 if(localStorage.getItem("adminLogin")!="true"){
-window.location.href="admin-login.html"
+  window.location.href="admin-login.html"
 }
 
-let bookings=JSON.parse(localStorage.getItem("bookings")) || []
+const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
-let text=""
+function renderBookingsTable() {
+  if (!bookings.length) {
+    document.getElementById("data").innerHTML = "<p style=\"color:rgba(255,255,255,0.8);\">No bookings yet.</p>";
+    return;
+  }
 
-bookings.forEach(b=>{
-text+="<p>"+b.name+" → "+b.place+"</p>"
-})
+  let table = `
+    <div class="bookingTableWrapper">
+      <table class="bookingTable">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>Destination</th>
+            <th>Package</th>
+          </tr>
+        </thead>
+        <tbody>
+  `;
 
-document.getElementById("data").innerHTML=text
+  bookings.forEach((b, index) => {
+    const packageType = b.packageType || b.pkg || "-";
+    const packageAmount = b.packageAmount ? `₹${b.packageAmount}` : "-";
+
+    table += `
+      <tr>
+        <td>${index + 1}</td>
+        <td>${b.name || "-"}</td>
+        <td>${b.phone || "-"}</td>
+        <td>${b.email || "-"}</td>
+        <td>${b.place || "-"}</td>
+        <td>${packageType} ${packageAmount}</td>
+      </tr>
+    `;
+  });
+
+  table += `
+        </tbody>
+      </table>
+    </div>
+  `;
+
+  document.getElementById("data").innerHTML = table;
+}
+
+renderBookingsTable();
 
 function logout(){
-localStorage.removeItem("adminLogin")
-window.location.href="admin-login.html"
+  localStorage.removeItem("adminLogin");
+  window.location.href="admin-login.html";
 }
 
 </script>
