@@ -261,18 +261,34 @@ function previousStep() {
   }
 }
 
-function submitBooking() {
+async function submitBooking() {
   const name = document.getElementById('name').value;
   const phone = document.getElementById('phone').value;
   const email = document.getElementById('email').value;
   const place = document.getElementById('place').value;
 
+  const packageType = localStorage.getItem('packageType') || null;
+  const packageAmount = localStorage.getItem('packageAmount') || null;
+
+  const bookingData = { name, phone, email, place, packageType, packageAmount };
+
+  // Save locally (fallback)
   const bookings = JSON.parse(localStorage.getItem('bookings')) || [];
-
-  bookings.push({ name, phone, email, place });
-
+  bookings.push(bookingData);
   localStorage.setItem('bookings', JSON.stringify(bookings));
   localStorage.setItem('destination', place);
+
+  // Try saving to backend (if available)
+  try {
+    await fetch('/api/bookings', {
+      method: 'POST',
+      credentials: 'include',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(bookingData),
+    });
+  } catch (err) {
+    // ignore if backend not available; local storage still works
+  }
 
   window.location.href = 'destination.html';
 }
